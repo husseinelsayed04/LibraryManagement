@@ -8,4 +8,9 @@ public class Book extends LibraryItem{
     public String getAuthor() {
         return author;
     }
+    @Override
+    public void displayInfo(){
+        super.displayInfo();
+        System.out.println("Author: " + getAuthor());
+    }
 }

@@ -9,4 +9,10 @@ public class Magazine extends  LibraryItem{
     public int getIssueNumber() {
         return issueNumber;
     }
+    @Override
+    public void displayInfo(){
+        super.displayInfo();
+        System.out.println("Issue Number:" + getIssueNumber());
+
+    }
 }

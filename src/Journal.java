@@ -5,4 +5,14 @@ public class Journal extends LibraryItem {
         super(title, publication, id, pages, isAvailable);
         this.researchField = researchField;
     }
+
+    public String getResearchField() {
+        return researchField;
+    }
+
+    public void displayInfo(){
+        super.displayInfo();
+        System.out.println("Research Field:" + getResearchField() );
+
+    }
 }
