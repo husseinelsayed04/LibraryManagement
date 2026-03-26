@@ -101,6 +101,16 @@ public class LibraryDatabase {
             System.out.println(type + " not found with title: " + title);
         }
     }
+    public List<String> getAvailableItemTypes() {
+        List<String> types = new ArrayList<>();
+        for (LibraryItem item : availableItems) {
+            String typeName = item.getClass().getSimpleName(); // Book, Magazine, Journal
+            if (!types.contains(typeName)) {
+                types.add(typeName);
+            }
+        }
+        return types;
+    }
 // borrow report
     public void borrowReport() {
         System.out.println("Borrowed Items Report:");

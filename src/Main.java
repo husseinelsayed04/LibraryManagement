@@ -1,5 +1,8 @@
 import java.util.Scanner;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -126,11 +129,29 @@ public class Main {
                     break;
 
                 case 7: // search
-                    System.out.println("Search by type (Book / Magazine / Journal):");
-                    String searchType = sc.nextLine();
+                    List<String> types = library.getAvailableItemTypes();
+                    if (types.isEmpty()) {
+                        System.out.println("No items in library.");
+                        break;
+                    }
+
+                    System.out.println("Select item type to search:");
+                    for (int i = 0; i < types.size(); i++) {
+                        System.out.println((i + 1) + ": " + types.get(i));
+                    }
+                    int typeChoice = sc.nextInt();
+                    sc.nextLine();
+                    if (typeChoice < 1 || typeChoice > types.size()) {
+                        System.out.println("Invalid choice.");
+                        break;
+                    }
+
+                    String selectedType = types.get(typeChoice - 1);
+
                     System.out.print("Enter item title to search: ");
                     String searchTitle = sc.nextLine();
-                    library.searchForItem(searchTitle, searchType);
+
+                    library.searchForItem(searchTitle, selectedType);
                     break;
 
                 case 8: // report borrow items
