@@ -12,38 +12,43 @@ public class LibraryDatabase {
         this.currentLibrarian = librarian;
     }
 
-    // add item
+    // Add item
     public void addItem(LibraryItem item) {
         availableItems.add(item);
         System.out.println(item.getTitle() + " added to library.");
     }
- //view item
+
+    // View available items
     public void viewAvailableItems() {
         if (availableItems.isEmpty()) {
             System.out.println("No items available.");
             return;
         }
 
-        System.out.println("Available Library Items:");
+        System.out.println("-------------------------------------------------------------");
+        System.out.printf("%-20s %-10s %-10s %-10s%n", "Title", "ID", "Type", "Available");
+        System.out.println("-------------------------------------------------------------");
+
         for (LibraryItem item : availableItems) {
-            item.displayInfo();
-            System.out.println("---------------------------");
+            String type = item.getClass().getSimpleName();
+            System.out.printf("%-20s %-10d %-10s %-10s%n",
+                    item.getTitle(),
+                    item.getId(),
+                    type,
+                    item.isAvailable() ? "Yes" : "No");
         }
+
+        System.out.println("-------------------------------------------------------------");
     }
- // lend item
+
+    // Lend item
     public void lendItem(String title, String type, User user) {
         for (LibraryItem item : availableItems) {
             boolean typeMatches = false;
             switch (type.toLowerCase()) {
-                case "book":
-                    typeMatches = item instanceof Book;
-                    break;
-                case "magazine":
-                    typeMatches = item instanceof Magazine;
-                    break;
-                case "journal":
-                    typeMatches = item instanceof Journal;
-                    break;
+                case "book": typeMatches = item instanceof Book; break;
+                case "magazine": typeMatches = item instanceof Magazine; break;
+                case "journal": typeMatches = item instanceof Journal; break;
             }
 
             if (typeMatches && item.getTitle().equalsIgnoreCase(title) && item.isAvailable()) {
@@ -57,7 +62,7 @@ public class LibraryDatabase {
         System.out.println(type + " with title '" + title + "' is not available.");
     }
 
-    //receive item
+    // Receive item
     public void receiveItemFromBorrower(String title) {
         for (Map.Entry<LibraryItem, User> entry : borrowedBooks.entrySet()) {
             LibraryItem item = entry.getKey();
@@ -73,26 +78,28 @@ public class LibraryDatabase {
         System.out.println("This item is not currently borrowed.");
     }
 
-    //search for item
+    // Search for item
     public void searchForItem(String title, String type) {
         boolean found = false;
         for (LibraryItem item : availableItems) {
             boolean typeMatches = false;
             switch (type.toLowerCase()) {
-                case "book":
-                    typeMatches = item instanceof Book;
-                    break;
-                case "magazine":
-                    typeMatches = item instanceof Magazine;
-                    break;
-                case "journal":
-                    typeMatches = item instanceof Journal;
-                    break;
+                case "book": typeMatches = item instanceof Book; break;
+                case "magazine": typeMatches = item instanceof Magazine; break;
+                case "journal": typeMatches = item instanceof Journal; break;
             }
 
             if (typeMatches && item.getTitle().equalsIgnoreCase(title)) {
                 System.out.println("Found " + type + ":");
-                item.displayInfo();
+                System.out.println("-------------------------------------------------------------");
+                System.out.printf("%-20s %-10s %-10s %-10s%n", "Title", "ID", "Type", "Available");
+                System.out.println("-------------------------------------------------------------");
+                System.out.printf("%-20s %-10d %-10s %-10s%n",
+                        item.getTitle(),
+                        item.getId(),
+                        type,
+                        item.isAvailable() ? "Yes" : "No");
+                System.out.println("-------------------------------------------------------------");
                 found = true;
                 break;
             }
@@ -101,6 +108,8 @@ public class LibraryDatabase {
             System.out.println(type + " not found with title: " + title);
         }
     }
+
+    // available item types
     public List<String> getAvailableItemTypes() {
         List<String> types = new ArrayList<>();
         for (LibraryItem item : availableItems) {
@@ -111,20 +120,32 @@ public class LibraryDatabase {
         }
         return types;
     }
-// borrow report
+
+    // Borrowed items report
     public void borrowReport() {
-        System.out.println("Borrowed Items Report:");
         if (borrowedBooks.isEmpty()) {
             System.out.println("No borrowed items.");
-        } else {
-            for (Map.Entry<LibraryItem, User> entry : borrowedBooks.entrySet()) {
-                LibraryItem item = entry.getKey();
-                User user = entry.getValue();
-                System.out.println(item.getTitle() + " (ID:" + item.getId() + ") borrowed by " + user.getName() + " (Job: " + user.getJob() + ")");
-            }
+            return;
         }
+
+        System.out.println("-------------------------------------------------------------");
+        System.out.printf("%-20s %-10s %-20s %-10s%n", "Title", "ID", "Borrowed By", "Job");
+        System.out.println("-------------------------------------------------------------");
+
+        for (Map.Entry<LibraryItem, User> entry : borrowedBooks.entrySet()) {
+            LibraryItem item = entry.getKey();
+            User user = entry.getValue();
+            System.out.printf("%-20s %-10d %-20s %-10s%n",
+                    item.getTitle(),
+                    item.getId(),
+                    user.getName(),
+                    user.getJob());
+        }
+
+        System.out.println("-------------------------------------------------------------");
     }
- // summary report
+
+    // Summary report
     public void summaryReport() {
         int booksCount = 0;
         int magazinesCount = 0;
@@ -142,11 +163,14 @@ public class LibraryDatabase {
             else if (item instanceof Journal) journalsCount++;
         }
 
+        System.out.println("-------------------------------------------------------------");
         System.out.println("Library Summary Report:");
-        System.out.println("Total Books: " + booksCount);
-        System.out.println("Total Magazines: " + magazinesCount);
-        System.out.println("Total Journals: " + journalsCount);
-        System.out.println("Available Items: " + availableItems.size());
-        System.out.println("Borrowed Items: " + borrowedBooks.size());
+        System.out.println("-------------------------------------------------------------");
+        System.out.printf("%-20s %-10d%n", "Total Books:", booksCount);
+        System.out.printf("%-20s %-10d%n", "Total Magazines:", magazinesCount);
+        System.out.printf("%-20s %-10d%n", "Total Journals:", journalsCount);
+        System.out.printf("%-20s %-10d%n", "Available Items:", availableItems.size());
+        System.out.printf("%-20s %-10d%n", "Borrowed Items:", borrowedBooks.size());
+        System.out.println("-------------------------------------------------------------");
     }
 }

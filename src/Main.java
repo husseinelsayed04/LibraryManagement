@@ -106,20 +106,44 @@ public class Main {
                     library.viewAvailableItems();
                     break;
 
-                case 5: //lend item
-                    System.out.print("Enter item type to lend (Book / Magazine / Journal): ");
-                    String lendType = sc.nextLine();
+                case 5: // Lend item
+                    List<String> lendTypes = library.getAvailableItemTypes();
+                    if (lendTypes.isEmpty()) {
+                        System.out.println("No items available to lend.");
+                        break;
+                    }
+
+                    System.out.println("Select item type to lend:");
+                    for (int i = 0; i < lendTypes.size(); i++) {
+                        System.out.println((i + 1) + ": " + lendTypes.get(i));
+                    }
+
+                    System.out.print("Enter choice: ");
+                    int lendTypeChoice = sc.nextInt();
+                    sc.nextLine();
+
+                    if (lendTypeChoice < 1 || lendTypeChoice > lendTypes.size()) {
+                        System.out.println("Invalid choice.");
+                        break;
+                    }
+
+                    String selectedLendType = lendTypes.get(lendTypeChoice - 1);
+
                     System.out.print("Enter item title to lend: ");
                     String lendTitle = sc.nextLine();
+
                     System.out.print("Enter user name: ");
                     String userName = sc.nextLine();
+
                     System.out.print("Enter user ID: ");
                     int userId = sc.nextInt();
                     sc.nextLine();
+
                     System.out.print("Enter user job: ");
                     String userJob = sc.nextLine();
+
                     User user = new User(userName, userId, userJob);
-                    library.lendItem(lendTitle, lendType, user);
+                    library.lendItem(lendTitle, selectedLendType, user);
                     break;
 
                 case 6:  // receive item
