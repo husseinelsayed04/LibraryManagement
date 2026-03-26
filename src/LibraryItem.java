@@ -36,11 +36,5 @@ public abstract class LibraryItem {
     public boolean isAvailable() {
         return isAvailable;
     }
-    public void displayInfo() {
-        System.out.println("Title: " + title);
-        System.out.println("ID: " + id);
-        System.out.println("Publication Year: " + publication);
-        System.out.println("Pages: " + numOfPages);
-        System.out.println("Available: " + isAvailable);
-    }
+    public abstract void displayInfo();
 }

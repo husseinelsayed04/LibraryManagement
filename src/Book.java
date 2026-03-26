@@ -9,8 +9,13 @@ public class Book extends LibraryItem{
         return author;
     }
     @Override
-    public void displayInfo(){
-        super.displayInfo();
-        System.out.println("Author: " + getAuthor());
+    public void displayInfo() {
+        System.out.println("Type: Book");
+        System.out.println("Title: " + getTitle());
+        System.out.println("ID: " + getId());
+        System.out.println("Publication Year: " + getPublication());
+        System.out.println("Pages: " + getNumOfPages());
+        System.out.println("Available: " + isAvailable());
+        System.out.println("Author: " + author);
     }
 }

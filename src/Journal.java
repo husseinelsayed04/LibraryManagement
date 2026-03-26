@@ -10,9 +10,14 @@ public class Journal extends LibraryItem {
         return researchField;
     }
 
-    public void displayInfo(){
-        super.displayInfo();
-        System.out.println("Research Field:" + getResearchField() );
-
+    @Override
+    public void displayInfo() {
+        System.out.println("Type: Journal");
+        System.out.println("Title: " + getTitle());
+        System.out.println("ID: " + getId());
+        System.out.println("Publication Year: " + getPublication());
+        System.out.println("Pages: " + getNumOfPages());
+        System.out.println("Available: " + isAvailable());
+        System.out.println("Research Field: " + researchField);
     }
 }
