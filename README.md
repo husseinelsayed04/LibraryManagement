@@ -25,9 +25,3 @@ A **simple Java Library Management System** with a **console interface** that al
 - Object-Oriented Programming (OOP) Principles (Encapsulation, Inheritance, Polymorphism)
 ---
 
-## ⚡ How to Run
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/husseinelsayed04/LibraryManagement.git
